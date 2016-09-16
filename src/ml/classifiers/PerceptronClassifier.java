@@ -109,4 +109,40 @@ public class PerceptronClassifier implements Classifier {
 		}
 		b += aExample.getLabel();
 	}
+	
+	/**
+	 * Main included primarily for sout accuracy testing.
+	 * 
+	 * @param args	N/A
+	 */
+	public static void main(String[] args) {
+		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
+		DataSet dataset = new DataSet(csvFile);
+		PerceptronClassifier original = new PerceptronClassifier();
+		double myAccuracy = testClassifier(original, dataset);
+		System.out.println("Accuracy was: " + myAccuracy);
+	}
+	
+	/**
+	 * Tests a trained classifier over a testing dataset, returning decimal accuracy.
+	 * 
+	 * @param aClassifier	Classifier to be tested.
+	 * @param aDataSet		Test dataset.
+	 * @return				Decimal representation of accuracy, [0,1].
+	 */
+	public static double testClassifier(Classifier aClassifier, DataSet aDataSet) {
+		double cumulativeAccuracy = 0;
+		for (int i=0; i<100; i++) {
+			DataSet[] temp = aDataSet.split(0.8);
+			aClassifier.train(temp[0]);
+			ArrayList<Example> myExamples = temp[1].getData();
+			double myEvaluated = 0;
+			double myCorrect = 0;
+			for(Example e : myExamples) {
+				if (aClassifier.classify(e)*e.getLabel() > 0) { myCorrect++; } myEvaluated++;
+			}
+			cumulativeAccuracy += myCorrect/myEvaluated;
+		}
+		return cumulativeAccuracy/100;
+	}
 }
