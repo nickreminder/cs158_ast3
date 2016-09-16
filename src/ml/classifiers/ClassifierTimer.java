@@ -49,7 +49,7 @@ public class ClassifierTimer {
 	}
 	
 	public static void main(String[] args){
-		String csvFile = "PATH_TO_TITANIC_DATASET/titanic-train.perc.csv";
+		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
 		DataSet dataset = new DataSet(csvFile);
 
 		int numRuns = 10;
@@ -69,9 +69,9 @@ public class ClassifierTimer {
 		PerceptronClassifier original = new PerceptronClassifier();
 		timeClassifier(original, dataset, numRuns);
 		
-		System.out.println("------------------------");
-		System.out.println("Average Perceptron:");
-		AveragePerceptronClassifier weighted = new AveragePerceptronClassifier();
-		timeClassifier(weighted, dataset, numRuns);
+//		System.out.println("------------------------");
+//		System.out.println("Average Perceptron:");
+//		AveragePerceptronClassifier weighted = new AveragePerceptronClassifier();
+//		timeClassifier(weighted, dataset, numRuns);
 	}
 }
