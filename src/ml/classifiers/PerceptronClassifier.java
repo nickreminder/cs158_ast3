@@ -19,9 +19,9 @@ import ml.Example;
  *
  */
 public class PerceptronClassifier implements Classifier {
-	private int iterations = 10;
-	private double b = 0;
-	private double[] weights;
+	protected int iterations = 10;
+	protected double b = 0;
+	protected double[] weights;
 	
 	public PerceptronClassifier() {
 	}
@@ -34,8 +34,8 @@ public class PerceptronClassifier implements Classifier {
 		Set<Integer> myFeatureSet = data.getAllFeatureIndices();
 		weights = new double[myFeatureSet.size()];
 		ArrayList<Example> myExamples = data.getData();
-		shuffle(myExamples);
 		for (int i=0; i<iterations; i++) {
+			shuffle(myExamples);
 			for (Example e : myExamples) {
 				double prediction = b + sumWeightedFeatures(e);
 				if (prediction * e.getLabel() <= 0) {
@@ -84,7 +84,7 @@ public class PerceptronClassifier implements Classifier {
 	 * @param aExample	The example in question.
 	 * @return			Double representing prediction for the model.
 	 */
-	private double sumWeightedFeatures(Example aExample) {
+	protected double sumWeightedFeatures(Example aExample) {
 		Set<Integer> myFeatureSet = aExample.getFeatureSet();
 		double myCarrier = 0;
 		int myIndexCounter = 0;
@@ -100,7 +100,7 @@ public class PerceptronClassifier implements Classifier {
 	 *
 	 * @param aExample	The example that broke our model.
 	 */
-	private void updateWeightsAndB(Example aExample) {
+	protected void updateWeightsAndB(Example aExample) {
 		Set<Integer> myFeatureSet = aExample.getFeatureSet();
 		int myIndexCounter = 0;
 		for (int i : myFeatureSet) {
@@ -108,6 +108,14 @@ public class PerceptronClassifier implements Classifier {
 			myIndexCounter++;
 		}
 		b += aExample.getLabel();
+	}
+	
+	/**
+	 * "Resets" the classifier, for testing purposes.
+	 */
+	protected void forgetTraining() {
+		weights = new double[weights.length];
+		b = 0;
 	}
 	
 	/**
@@ -130,7 +138,7 @@ public class PerceptronClassifier implements Classifier {
 	 * @param aDataSet		Test dataset.
 	 * @return				Decimal representation of accuracy, [0,1].
 	 */
-	public static double testClassifier(Classifier aClassifier, DataSet aDataSet) {
+	public static double testClassifier(PerceptronClassifier aClassifier, DataSet aDataSet) {
 		double cumulativeAccuracy = 0;
 		for (int i=0; i<100; i++) {
 			DataSet[] temp = aDataSet.split(0.8);
@@ -142,6 +150,7 @@ public class PerceptronClassifier implements Classifier {
 				if (aClassifier.classify(e)*e.getLabel() > 0) { myCorrect++; } myEvaluated++;
 			}
 			cumulativeAccuracy += myCorrect/myEvaluated;
+			aClassifier.forgetTraining();
 		}
 		return cumulativeAccuracy/100;
 	}
