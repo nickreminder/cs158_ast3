@@ -124,14 +124,14 @@ public class PerceptronClassifier implements Classifier {
 	 * 
 	 * @param args	N/A
 	 */
-	public static void main(String[] args) {
-		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
-		DataSet dataset = new DataSet(csvFile);
-		PerceptronClassifier original = new PerceptronClassifier();
-		double myAccuracy = testClassifier(original, dataset);
-		System.out.println("Accuracy was: " + myAccuracy);
-		original.forgetTraining();
-		timeClassifier(original, dataset, 1000);
+	 public static void main(String[] args) {
+//		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
+//		DataSet dataset = new DataSet(csvFile);
+//		PerceptronClassifier original = new PerceptronClassifier();
+//		double myAccuracy = testClassifier(original, dataset);
+//		System.out.println("Accuracy was: " + myAccuracy);
+//		original.forgetTraining();
+//		timeClassifier(original, dataset, 1000);
 		//testIterationOptimum(original, dataset);
 	}
 	

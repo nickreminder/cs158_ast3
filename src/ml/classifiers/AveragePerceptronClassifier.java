@@ -85,12 +85,12 @@ public class AveragePerceptronClassifier extends PerceptronClassifier {
 	 * @param args	N/A
 	 */
 	public static void main(String[] args) {
-		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
-		DataSet dataset = new DataSet(csvFile);
-		AveragePerceptronClassifier original = new AveragePerceptronClassifier();
-		double myAccuracy = testClassifier(original, dataset);
-		System.out.println("Accuracy was: " + myAccuracy);
-		timeClassifier(original, dataset, 1000);
+//		String csvFile = "C:/Users/Nick/Documents/School/Pomona College/Sr 1st Sem/Eclipse Workspace/cs158_assignment3/src/ml/titanic-train.perc.csv";
+//		DataSet dataset = new DataSet(csvFile);
+//		AveragePerceptronClassifier original = new AveragePerceptronClassifier();
+//		double myAccuracy = testClassifier(original, dataset);
+//		System.out.println("Accuracy was: " + myAccuracy);
+//		timeClassifier(original, dataset, 1000);
 		//testIterationOptimum(original, dataset);
 		
 	}

@@ -1,6 +1,0 @@
-//Nick Reminder, Maddie Gordon
-//cs158 Assignment 3
-
--We implemented AveragePerceptronClassifier by extending PerceptronClassifier;
-we only overrode the train method, a helper method for train, and a "forget training"
-method we used in testing, as more fields had to be reset.
