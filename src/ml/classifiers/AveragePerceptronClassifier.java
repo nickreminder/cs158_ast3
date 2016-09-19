@@ -1,3 +1,6 @@
+// Nick Reminder, Maddie Gordon
+// cs158 Assignment 3
+
 package ml.classifiers;
 
 import java.util.ArrayList;
@@ -12,7 +15,6 @@ public class AveragePerceptronClassifier extends PerceptronClassifier {
 	private double[] aggweights;
 	
 	public AveragePerceptronClassifier() {
-		
 	}
 	
 	@Override
