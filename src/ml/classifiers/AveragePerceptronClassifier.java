@@ -3,6 +3,8 @@
 
 package ml.classifiers;
 
+import static ml.classifiers.ClassifierTimer.timeClassifier;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
@@ -17,6 +19,9 @@ public class AveragePerceptronClassifier extends PerceptronClassifier {
 	public AveragePerceptronClassifier() {
 	}
 	
+	/**
+	 * Trains classifier model on DataSet argument.
+	 */
 	@Override
 	public void train(DataSet data) {
 		Set<Integer> myFeatureSet = data.getAllFeatureIndices();
@@ -85,5 +90,8 @@ public class AveragePerceptronClassifier extends PerceptronClassifier {
 		AveragePerceptronClassifier original = new AveragePerceptronClassifier();
 		double myAccuracy = testClassifier(original, dataset);
 		System.out.println("Accuracy was: " + myAccuracy);
+		timeClassifier(original, dataset, 1000);
+		//testIterationOptimum(original, dataset);
+		
 	}
 }

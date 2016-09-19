@@ -4,6 +4,7 @@
 package ml.classifiers;
 
 import static java.util.Collections.shuffle;
+import static ml.classifiers.ClassifierTimer.timeClassifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -129,6 +130,9 @@ public class PerceptronClassifier implements Classifier {
 		PerceptronClassifier original = new PerceptronClassifier();
 		double myAccuracy = testClassifier(original, dataset);
 		System.out.println("Accuracy was: " + myAccuracy);
+		original.forgetTraining();
+		timeClassifier(original, dataset, 1000);
+		//testIterationOptimum(original, dataset);
 	}
 	
 	/**
@@ -153,5 +157,56 @@ public class PerceptronClassifier implements Classifier {
 			aClassifier.forgetTraining();
 		}
 		return cumulativeAccuracy/100;
+	}
+	
+	/**
+	 * Does same as testClassifier, except also on training data, returning a string with both calculated accuracies.
+	 * 
+	 * @param aClassifier	Classifier to be evaluated.
+	 * @param aDataSet		Data set to be evaluated.
+	 * @return				String containing both accuracies.
+	 */
+	public static String testClassifierOnTestData(PerceptronClassifier aClassifier, DataSet aDataSet) {
+		double cumulativeAccuracy = 0;
+		double cumulativeAccuracy2 = 0;
+		for (int i=0; i<100; i++) {
+			DataSet[] temp = aDataSet.split(0.8);
+			aClassifier.train(temp[0]);
+			
+			//Test on test data
+			ArrayList<Example> myExamples = temp[1].getData();
+			double myEvaluated = 0;
+			double myCorrect = 0;
+			for(Example e : myExamples) {
+				if (aClassifier.classify(e)*e.getLabel() > 0) { myCorrect++; } myEvaluated++;
+			}
+			cumulativeAccuracy += myCorrect/myEvaluated;
+			
+			//Test on training data
+			ArrayList<Example> myExamples2 = temp[0].getData();
+			double myEvaluated2 = 0;
+			double myCorrect2 = 0;
+			for(Example e : myExamples2) {
+				if (aClassifier.classify(e)*e.getLabel() > 0) { myCorrect2++; } myEvaluated2++;
+			}
+			cumulativeAccuracy2 += myCorrect2/myEvaluated2;
+			
+			aClassifier.forgetTraining();
+		}
+		return new String("Test data: " + (cumulativeAccuracy/100) + ", Training data: " + (cumulativeAccuracy2/100));
+	}
+	
+	/**
+	 * Uses sout to test effect of iteration number on accuracy.
+	 * 
+	 * @param aClassifier	Classifier to test.
+	 * @param data			Data set to use for testing.
+	 */
+	public static void testIterationOptimum(PerceptronClassifier aClassifier, DataSet data) {
+		aClassifier.forgetTraining();
+		for (int i=1; i<50; i++) {
+			aClassifier.setIterations(i);
+			System.out.println("Accuracy for " + i + " iterations: " + testClassifierOnTestData(aClassifier, data));
+		}
 	}
 }
